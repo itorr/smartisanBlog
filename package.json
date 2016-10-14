@@ -1,0 +1,21 @@
+{
+  "name": "smartisanBlog",
+  "version": "1.0.0",
+  "description": " 基于锤子便签的博客程序",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itorr/smartisanBlog.git"
+  },
+  "keywords": [
+    "基于锤子便签的博客程序"
+  ],
+  "author": "itorrrrrr@me.com",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/itorr/smartisanBlog/issues"
+  },
+  "homepage": "https://github.com/itorr/smartisanBlog",
+  "dependencies": {
+    "request": "^2.75.0"
+  }
+}
