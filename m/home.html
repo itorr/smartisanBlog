@@ -1,0 +1,61 @@
+
+
+
+<script>
+var 
+POST={};
+
+//$.x('x/?post',function(r){
+$.x('json/post.json',function(r){
+	r=r.data;
+
+	var
+	post=r.list;
+
+	var 
+	i=post.length,
+	o,
+	_post=[];
+
+	while(i--){
+		o=post[i];
+
+
+		o.time=o.modify_time.reDate();
+		o.title=o.title.replace(/^#\s?/,'');
+		o.count=o.detail.length;
+		//o.text=markdown.toHTML(o.detail);
+		o.hasImage=!!o.detail.match(/<image/);
+		POST[o.pos]=o;
+
+		if(o.favorite)
+			_post.push(o);
+	}
+
+
+	MD('posts',{
+		markdown:r.setting.markdown,
+		post:_post
+	},'.posts');
+
+	$.x('json/pic.json',function(r){
+		PIC=r;
+
+		Q.init({
+			key:'/',
+			index:'home'
+		});
+		img2err();
+	})
+})
+
+var 
+pop=function(){
+	var hash=location.hash.match(/[\w\/]+/)+'';
+
+};
+
+
+//window.onhashchange=pop;
+
+</script>

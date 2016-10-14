@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>锤子博客</title>
+<meta name="viewport" content="user-scalable=no,width=device-width">
+
+<link rel="stylesheet" href="i/i.css">
+
+<div class="side">
+	<header>
+		<h1><a href="#/home">锤子博客</a></h1>
+		<xmp xid="header">
+		<a href="#/home">
+			{{#avatar_url}}
+			<img src="{{avatar_url}}">
+			{{/avatar_url}}
+
+			{{^avatar_url}}
+			<h1>{{nickname}}</h1>
+			{{/avatar_url}}
+		</a>
+		</xmp>
+	</header>
+	<div class="posts">
+		<xmp>
+		<!-- {{markdown}} -->
+			{{#post}}
+			<a id="p_{{pos}}" href="#/p/{{pos}}" class="post" markdown="{{markdown}}" favorite="{{favorite}}"{{#hasImage}}image{{/hasImage}}>
+				<h2>{{title}}</h2>
+				<time>{{time}}</time>
+			</a>
+			{{/post}}
+		</xmp>
+	</div>
+	<footer>
+		<p>🔨博客，基于锤子便签的博客程序。</p>
+	</footer>
+</div>
+
+<div class="article-box">
+	<xmp>
+		<div class="article">
+			<div class="text">
+				{{{text}}}
+			</div>
+			<span class="count">{{count}}</span>
+			<div class="comments">
+				
+			</div>
+		</div>
+	</xmp>
+</div>
+<script src="i/itorr2.js"></script>
+<script src="i/q.js"></script>
+<script src="i/mustache.min.js"></script>
+<script src="i/md.js"></script>
+<script src="i/c.js"></script>
+<!--  -->
+
+
+
+
+	
+
+
