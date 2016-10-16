@@ -4,7 +4,6 @@ const path = require('path');
 
 const superagent = require('superagent');
 const async = require('async');
-const cheerio = require('cheerio');
 
 const account = require('../config.json');
 
@@ -51,7 +50,7 @@ router.get('/', (req, res) => {
                 .get(url.getProfile)
                 .set(header)
                 .set('Referer', 'https://cloud.smartisan.com/')
-                .set('Cookie', 'SCA_SESS='+arg1+'-a; SCA_LOGIN=1')
+                .set('Cookie', 'SCA_SESS=' + arg1 + '-a; SCA_LOGIN=1')
                 .redirects(0)
                 .end((err, response) => {
                     if (err || !response.ok) {
@@ -97,13 +96,13 @@ router.get('/note', (req, res) => {
                 })
         },
         (arg1, callback) => {
-            // arg1 now equals 'one' and arg2 now equals 'two'
-            // callback(null, 'three');
+            // arg1 now equals 'token'
+            // callback(null, 'note');
             superagent
                 .get(url.getNote)
                 .set(header)
                 .set('Referer', 'https://cloud.smartisan.com/')
-                .set('Cookie', 'SCA_SESS='+arg1+'-a; SCA_LOGIN=1')
+                .set('Cookie', 'SCA_SESS=' + arg1 + '-a; SCA_LOGIN=1')
                 .redirects(0)
                 .end((err, response) => {
                     if (err || !response.ok) {
