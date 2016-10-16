@@ -1,11 +1,11 @@
-const express = require('express'),
-    router = express.Router(),
-    superagent = require('superagent'),
-    eventproxy = require('eventproxy');
+const express = require('express');
+const router = express.Router();
+const superagent = require('superagent');
+const eventproxy = require('eventproxy');
 
 
 const account = require('../config.json');
-
+const errorCode = require('../error_code.json');
 
 const url = {
     getCookie: 'https://account.smartisan.com/v2/session/?m=post',
@@ -18,8 +18,7 @@ const header = {
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
 };
 
-
-var ep = new eventproxy();
+let ep = new eventproxy();
 
 var ticket =  {
     value: null,
@@ -37,19 +36,22 @@ var ticket =  {
             .redirects(0)
             .end((err, res)=> {
             if (err || !res.ok) {
-            console.log('出错了!');
-        } else {
-            console.log('成功获取了 uid' + JSON.stringify(res.body));
+                console.log('出错了!');
+            } else {
+                console.log('成功获取了 uid: ' + JSON.stringify(res.body));
+                console.log(res.headers['set-cookie']);
 
-            that.value = res.headers['set-cookie']
-                .join(',').match(/SCA_SESS=(\w{16,64})/i)[1];
-            that.expires = new Date().addMonth(7);
+                // that.value = res.headers['set-cookie']
+                //     .join(',').match(/SCA_SESS=(\w{16,64})/i)[1];
+                that.value = res.headers['set-cookie']
+                    .join(',').match(/SCA_SESS=([\w\-]{16,64})/i)[1];
+                that.expires = new Date().addMonth(7);
 
-            console.log(that.value);
+                console.log(that.value);
 
-            ep.emit('got_ticket', that.value);
-        }
-    });
+                ep.emit('got_ticket', that.value);
+                }
+            });
     }
 };
 
@@ -61,11 +63,11 @@ Date.prototype.addMonth = function (monthNum) {
 };
 
 
-var execute = (method, res)=> {
+let execute = (method, res)=> {
     if (ticket._outOfDate()) {
         console.log('ticket 过期了!');
         ticket._init();
-        ep.all('got_ticket', (_ticket)=> {
+        ep.on('got_ticket', (_ticket)=> {
             method(_ticket, res);
     });
     }else{
@@ -73,23 +75,38 @@ var execute = (method, res)=> {
     }
 };
 
-var getList = (ticket, res)=> {
+const getProfile = (ticket, res)=> {
     let _res = res;
     superagent
-        .post(url.getNote)
+        .get(url.getProfile)
         .set(header)
-        .set('Referer','https://cloud.smartisan.com/apps/note/')
-        .set('SCA_SESS', ticket)
-        .set('SCA_LOGIN', 1)
-        .set('Cookie', 'SCA_SESS='+ticket+'-a; SCA_LOGIN=1')
+        .set('Referer','https://cloud.smartisan.com/')
+        .set('Cookie', 'SCA_SESS=' + ticket + '-a; SCA_LOGIN=1')
         .end((err, res)=>{
-        console.log('execute profiles: ' + JSON.stringify(res.body));
-    _res.send(JSON.stringify(res.body))
-});
+            console.log('成功获取个人信息:\r' + JSON.stringify(res.body));
+            _res.send(res.body)
+        });
 };
 
-router.get('/list', (req, res)=> {
-    execute(getList, res);
+const getNote = (ticket, res)=> {
+    let _res = res;
+    superagent
+        .get(url.getNote)
+        .set(header)
+        .set('Referer','https://cloud.smartisan.com/apps/note/')
+        .set('Cookie', 'SCA_SESS=' + ticket + '-a; SCA_LOGIN=1')
+        .end((err, res) => {
+            console.log('成功获取便签:\r ' + JSON.stringify(res.body));
+            _res.send(res.body)
+        });
+};
+
+router.get('/info', (req, res)=> {
+    execute(getProfile, res);
+});
+
+router.get('/post', (req, res)=> {
+    execute(getNote, res);
 });
 
 module.exports = router;
