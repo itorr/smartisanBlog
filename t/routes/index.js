@@ -6,11 +6,12 @@ const superagent = require('superagent');
 const async = require('async');
 const cheerio = require('cheerio');
 
+const account = require('../config.json');
+
 const url = {
     getCookie: 'https://account.smartisan.com/v2/session/?m=post',
     getProfile: 'https://cloud.smartisan.com/index.php?r=account%2Flogin',
-    getNote: 'https://cloud.smartisan.com/apps/note/index.php?r=v2%2FgetList',
-    getImage: 'https://cloud.smartisan.com/notesimage/Notes_1476427060123.png'
+    getNote: 'https://cloud.smartisan.com/apps/note/index.php?r=v2%2FgetList'
 };
 
 const header = {
@@ -18,11 +19,6 @@ const header = {
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
 };
 
-const account = {
-    username: 'songjiaxin2008@vip.qq.com',
-    password: '9w616@ni1314',
-    extended_login: '1'
-};
 
 router.get('/', (req, res) => {
     async.waterfall([
@@ -36,6 +32,9 @@ router.get('/', (req, res) => {
                 .end((err, response) => {
                     if (err || !response.ok) {
                         console.log('出错了!');
+                    } else if (response.body.errno == 1502) {
+                        console.log('CAPTCHA REQUIRED');
+                        res.send(JSON.stringify(response.body));
                     } else {
                         console.log('成功获取了 uid ' + JSON.stringify(response.body));
                         var token = response.headers['set-cookie']
@@ -56,7 +55,7 @@ router.get('/', (req, res) => {
                 .redirects(0)
                 .end((err, response) => {
                     if (err || !response.ok) {
-                        alert('Oh no! error');
+                        console.log('出错了!');
                     } else if (response.body.code == 1) {
                         console.log('未登录');
                     } else {
@@ -85,6 +84,9 @@ router.get('/note', (req, res) => {
                 .end((err, response) => {
                     if (err || !response.ok) {
                         console.log('出错了!');
+                    } else if (response.body.errno == 1502) {
+                        console.log('太频繁了!');
+                        res.send(JSON.stringify(response.body));
                     } else {
                         console.log('成功获取了 uid ' + JSON.stringify(response.body));
                         var token = response.headers['set-cookie']
@@ -105,7 +107,7 @@ router.get('/note', (req, res) => {
                 .redirects(0)
                 .end((err, response) => {
                     if (err || !response.ok) {
-                        alert('Oh no! error');
+                        console.log('出错了!');
                     } else if (response.body.code == 1) {
                         console.log('未登录');
                     } else {

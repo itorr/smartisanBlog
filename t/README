@@ -1,0 +1,10 @@
+```bash
+cp config.json.example config.json
+npm i
+node ./bin/www.js
+```
+
+Currently available api
+
+http://localhost:3000/api/v1
+http://localhost:3000/api/v1/note
