@@ -151,7 +151,10 @@ Q.reg('p',function(pid){//打开具体某篇文章时
 	MD('article',P,'.article-box');
 
 	if($('pre code')){
-		hljs.initHighlighting();
+		// hljs.initHighlighting();
+		$$('pre code').forEach(function(block) {
+			hljs.highlightBlock(block);
+		});
 	}
 
 	$('.article-box').scrollTop=0;
