@@ -53,6 +53,7 @@ Monokai Sublime style. Derived from Monokai by noformnocontent http://nn.mit-lic
   color: #f92672;
 }
 
+.hljs-function .hljs-keyword,
 .hljs-symbol,
 .hljs-attribute {
   color: #66d9ef;
