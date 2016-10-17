@@ -28,7 +28,7 @@ xmp{display:none;}
 
 
 html{
-	background:#F0DAB3 url(post-bg.jpg);
+	background:#F0DAB3 url(post-bg.jpg) top center;
 }
 
 html,

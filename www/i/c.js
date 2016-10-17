@@ -36,7 +36,9 @@ MD=function(t,i,r,f,ff){
 		r=function(i){return i};
 	}
 	t=getM(t);
-	t=Mustache.render(t,r(i));
+	
+	t=模板.运转(t,r(i));
+	// t=Mustache.render(t,r(i));
 	if(f)
 		tranH(t,f,ff);
 
@@ -53,11 +55,13 @@ MX=function(t,d,r,f,ff){
 		// if(i.error)
 		// 	return r?r(i):alert(i.error);
 
-		t=Mustache.render(t,r(i));
+		t=模板.运转(t,r(i));
+		// t=Mustache.render(t,r(i));
 		if(f)
 			tranH(t,f,ff);
 	});
 },
+POST={},
 text2html=function(txt){
 
 	txt=txt.replace(/<image w=(\d+) h=(\d+) describe=(.{0,}?) name=(Notes_\d+\.(jpeg|png|jpg|gif))>/g,function(全,宽,高,说明文字,图片文件名){
@@ -95,11 +99,13 @@ text2html=function(txt){
 	txt=_md2html(txt);
 	return txt;
 },
+时间格式化=function(t){
+	console.log(t);
+	return t.reDate();
+},
 getInfo=function(){
 	//$.x('x/?info&_r='+Math.random(),function(r){
 	$.x('json/info.json',function(r){
-		if(!r.data)
-			return $.j('m/login.html');
 
 		ME=r=r.data;
 
@@ -107,8 +113,56 @@ getInfo=function(){
 
 		MD('header',ME,'header');
 
-		$.j('m/home.html');
 	});
+
+	$.x('json/post.json',function(r){
+		r=r.data;
+
+		var
+		post=r.note;
+
+		var 
+		i=post.length,
+		o,
+		_post=[];
+
+		while(i--){
+			o=post[i];
+
+
+			// o.time=o.modify_time.reDate();
+			o.title=o.title.replace(/^#\s?/,'');
+			// o.count=o.detail.length;
+			// o.text=markdown.toHTML(o.detail);
+			o.hasImage=!!o.detail.match(/<image/);
+			POST[o.pos]=o;
+
+			//if(o.favorite)
+				_post.push(o);
+		}
+
+
+		MD('posts',{
+			markdown:r.setting.markdown,
+			post:_post
+		},'.posts');
+
+		$.x('json/pic.json',function(r){
+			PIC=r;
+
+			Q.init({
+				key:'/',
+				index:'home'
+			});
+			img2err();
+		})
+	})
+
+	var 
+	pop=function(){
+		var hash=location.hash.match(/[\w\/]+/)+'';
+
+	};
 };
 
 var 
@@ -141,7 +195,7 @@ Q.reg('p',function(pid){//打开具体某篇文章时
 
 	document.title=P.title;
 	P.text=text2html(P.detail).replace(/<\/h1>/,function(){
-		return '<\/h1>\n<time>'+P.time+'</time>\n';
+		return '<\/h1>\n<time>'+时间格式化(P.modify_time)+'</time>\n';
 	});
 	
 
@@ -209,7 +263,6 @@ img2err=function(){
 
 
 getInfo();
-$.j('//1.mouto.org/x.js');
 
 
 

@@ -10,7 +10,7 @@
 		<h1><a href="#/home">锤子博客</a></h1>
 		<xmp xid="header">
 		<a href="#/home">
-			{{#avatar_url}}
+			{{$avatar_url}}
 			<img src="{{avatar_url}}">
 			{{/avatar_url}}
 
@@ -24,9 +24,9 @@
 		<xmp>
 		<!-- {{markdown}} -->
 			{{#post}}
-			<a id="p_{{pos}}" href="#/p/{{pos}}" class="post" markdown="{{markdown}}" favorite="{{favorite}}"{{#hasImage}}image{{/hasImage}}>
+			<a id="p_{{pos}}" href="#/p/{{pos}}" class="post" markdown="{{markdown}}" favorite="{{favorite}}"{{$hasImage}}image{{/hasImage}}>
 				<h2>{{title}}</h2>
-				<time>{{time}}</time>
+				<time>{{modify_time|时间格式化}}</time>
 			</a>
 			{{/post}}
 		</xmp>
@@ -40,9 +40,9 @@
 	<xmp>
 		<div class="article">
 			<div class="text">
-				{{{text}}}
+				{{&text}}
 			</div>
-			<span class="count">{{count}}</span>
+			<span class="count">{{detail.length}}</span>
 			<div class="comments">
 				
 			</div>
@@ -51,7 +51,7 @@
 </div>
 <script src="i/itorr2.js"></script>
 <script src="i/q.js"></script>
-<script src="i/mustache.min.js"></script>
+<script src="i/templet.js"></script>
 <script src="i/md.js"></script>
 <script src="i/c.js"></script>
 <!--  -->
