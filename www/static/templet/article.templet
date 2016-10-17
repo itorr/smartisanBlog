@@ -1,0 +1,9 @@
+<div class="article">
+	<div class="text">
+		{{&text}}
+	</div>
+	<span class="count">{{detail.length}}</span>
+	<div class="comments">
+		
+	</div>
+</div>

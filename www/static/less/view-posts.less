@@ -1,0 +1,42 @@
+
+.posts{
+	
+}
+.post{
+	display:block;
+	padding:.6em 1em .5em;
+	text-shadow:0 1px 0 rgba(255,255,255,.8);
+}
+.post.active,
+.post:hover{
+	box-shadow: 0 1px 4px rgba(0,0,0,.03) inset;
+	text-shadow:0 1px 0 #FFF;
+
+	background:rgba(255,255,255,.5);
+}
+
+
+.post h2{
+	line-height:1.1;
+	padding:.2em 0 0;
+	margin:0;
+}
+.post[image] h2:after{
+	content:'';
+	display:inline-block;
+	width:24px;
+	height:24px;
+	vertical-align:middle;
+	margin-left:.2em;
+	background:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+Cgk8cGF0aCBkPSJNMSw0djE2aDIyVjRIMXogTTIxLDZ2MTIuMTdsLTMuNjctNC4xNmwtMi4yMSwyLjE3TDguMzUsOC4yNkwzLDEzLjgxVjZIMjF6Ii8+Cgk8Y2lyY2xlIGN4PSIxNi40MyIgY3k9IjkuOTMiIHI9IjIuNDMiLz4KPC9zdmc+Cg==);
+	opacity:.2;
+	position:relative;
+	top:-3px;
+}
+.post time{
+	color:#b9a691;
+	font-size:.8em;
+	margin-left:1em;
+	margin-left:0;
+}
+

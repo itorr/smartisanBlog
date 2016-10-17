@@ -3,62 +3,32 @@
 <title>锤子博客</title>
 <meta name="viewport" content="user-scalable=no,width=device-width">
 
-<link rel="stylesheet" href="i/i.css">
+
+<link rel="stylesheet/less" href="static/less/i.less">
+<link rel="stylesheet" href="static/highlight/styles/monokai-sublime.css">
+<script>
+for(var key in localStorage){
+	if(key.match(/^http/))
+		localStorage.removeItem(key)
+}
+</script>
+<script src="static/js/less.js"></script>
+
 
 <div class="side">
 	<header>
 		<h1><a href="#/home">锤子博客</a></h1>
-		<xmp xid="header">
-		<a href="#/home">
-			{{$avatar_url}}
-			<img src="{{avatar_url}}">
-			{{/avatar_url}}
-
-			{{^avatar_url}}
-			<h1>{{nickname}}</h1>
-			{{/avatar_url}}
-		</a>
-		</xmp>
 	</header>
-	<div class="posts">
-		<xmp>
-		<!-- {{markdown}} -->
-			{{#post}}
-			<a id="p_{{pos}}" href="#/p/{{pos}}" class="post" markdown="{{markdown}}" favorite="{{favorite}}"{{$hasImage}}image{{/hasImage}}>
-				<h2>{{title}}</h2>
-				<time>{{modify_time|时间格式化}}</time>
-			</a>
-			{{/post}}
-		</xmp>
-	</div>
+	<div class="posts"></div>
 	<footer>
 		<p>🔨博客，基于锤子便签的博客程序。</p>
 	</footer>
 </div>
-
-<div class="article-box">
-	<xmp>
-		<div class="article">
-			<div class="text">
-				{{&text}}
-			</div>
-			<span class="count">{{detail.length}}</span>
-			<div class="comments">
-				
-			</div>
-		</div>
-	</xmp>
-</div>
-<script src="i/itorr2.js"></script>
-<script src="i/q.js"></script>
-<script src="i/templet.js"></script>
-<script src="i/md.js"></script>
-<script src="i/c.js"></script>
-<!--  -->
-
-
-
-
-	
-
-
+<div class="article-box"></div>
+<script src="static/js/itorr2.js"></script>
+<script src="static/js/q.js"></script>
+<script src="static/js/templet.js"></script>
+<script src="static/js/获取模板-开发版.js"></script>
+<script src="static/js/pagedown.converter.js"></script>
+<script src="static/highlight/highlight.pack.js"></script>
+<script src="static/js/controller.js"></script>

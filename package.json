@@ -16,6 +16,15 @@
   },
   "homepage": "https://github.com/itorr/smartisanBlog",
   "dependencies": {
+    "grunt": "^1.0.1",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-cssmin": "^1.0.2",
+    "grunt-contrib-htmlmin": "^2.0.0",
+    "grunt-contrib-less": "^1.4.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "highlight.js": "^9.7.0",
     "request": "^2.75.0"
   }
 }

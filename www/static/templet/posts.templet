@@ -1,0 +1,6 @@
+{{#post}}
+<a id="p_{{pos}}" href="#/p/{{pos}}" class="post" markdown="{{markdown}}" favorite="{{favorite}}"{{$hasImage}}image{{/hasImage}}>
+	<h2>{{title}}</h2>
+	<time>{{modify_time|时间格式化}}</time>
+</a>
+{{/post}}

@@ -1,0 +1,9 @@
+<a href="#/home">
+	{{$avatar_url}}
+	<img src="{{avatar_url}}">
+	{{/avatar_url}}
+
+	{{^avatar_url}}
+	<h1>{{nickname}}</h1>
+	{{/avatar_url}}
+</a>
