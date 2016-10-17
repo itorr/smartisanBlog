@@ -141,6 +141,7 @@ module.exports = function (grunt) {
 						'www/static/js/pagedown.converter.js',
 						'dest/static/js/templets.js',
 						'www/static/highlight/highlight.pack.js',
+						'www/config.js',
 						'www/static/js/controller.js',
 					]
 				}

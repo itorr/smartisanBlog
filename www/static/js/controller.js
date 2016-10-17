@@ -1,11 +1,8 @@
 $.U=function(url){
-	// return 'http://localhost:3000/api/v1/'+url;
-	return '../json/'+url+'.json';
+	return apiPath.replace(/\{.+?\}/g,url);
 };
 
-
 var 
-
 tranH=function(t,f,ff){
 	switch(typeof f){
 		case 'function':
