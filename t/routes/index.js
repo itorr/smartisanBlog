@@ -43,13 +43,12 @@ var ticket = {
 
                 that.value = res.headers['set-cookie']
                     .join(',').match(/SCA_SESS=([\w\-]{16,64})/i)[1]
-                // that.expires = new Date().addDay(7)
                 moment.locale('zh-cn')
-                let time = moment()
-                let expires = time.add(7, 'days')
+                const time = moment()
+                const expires = time.add(7, 'days')
                 that.expires = expires.format('YYYY-MM-DD HH:mm:ss')
 
-                console.log('got ticket:' + that.value)
+                console.log('成功获取ticket: ' + that.value)
                 console.log('将于 ' + that.expires + ' 过期')
 
                 ep.emit('got_ticket', that.value)
@@ -71,35 +70,49 @@ let execute = (method, res) => {
 }
 
 const getProfile = (ticket, res) => {
-  let _res = res
   superagent
         .get(url.getProfile)
         .set(header)
         .set('Referer', 'https://cloud.smartisan.com/')
         .set('Cookie', 'SCA_SESS=' + ticket + '-a; SCA_LOGIN=1')
-        .end((err, res) => {
-          if (err || !res.ok) {
+        .end((err, response) => {
+          if (err || !response.ok) {
             console.log('出错了')
           } else {
-            console.log('成功获取个人信息:\r' + JSON.stringify(res.body))
-            _res.send(res.body)
+            console.log('成功获取个人信息: ' + JSON.stringify(response.body))
+            const payload = []
+              payload.push({
+              "uid": response.body['data']['uid'],
+              "nickname": response.body['data']['nickname'],
+              "avatar_url": response.body['data']['avatar_url']
+            })
+            res.send(payload)
           }
         })
 }
 
 const getNote = (ticket, res) => {
-  let _res = res
   superagent
         .get(url.getNote)
         .set(header)
         .set('Referer', 'https://cloud.smartisan.com/apps/note/')
         .set('Cookie', 'SCA_SESS=' + ticket + '-a; SCA_LOGIN=1')
-        .end((err, res) => {
-          if (err || !res.ok) {
+        .end((err, response) => {
+          if (err || !response.ok) {
             console.log('出错了')
           } else {
-            console.log('成功获取便签:\r ' + JSON.stringify(res.body))
-            _res.send(res.body)
+            const length = JSON.stringify(response.body['data']['note'].length)
+            console.log('成功获取' + length + '条便签:\r')
+            console.log(JSON.stringify(response.body))
+            const payload = []
+            for (let offset = 0; offset < length; offset++) {
+              if (JSON.stringify(response.body['data']['note'][offset]['favorite']) === '1') {
+                payload.push(response.body['data']['note'][offset])
+              }
+            }
+            console.log('成功输出' + payload.length + '条便签:\r')
+            console.log('输出是' + payload)
+            res.send(payload)
           }
         })
 }
