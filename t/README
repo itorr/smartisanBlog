@@ -6,6 +6,6 @@ node ./bin/www.js
 
 Currently available api
 
-http://localhost:3000/api/v1
-http://localhost:3000/api/v1/note
+http://localhost:3000/api/v1/info
+http://localhost:3000/api/v1/post
 

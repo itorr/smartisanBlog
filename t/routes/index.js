@@ -80,13 +80,12 @@ const getProfile = (ticket, res) => {
             console.log('出错了')
           } else {
             console.log('成功获取个人信息: ' + JSON.stringify(response.body))
-            const payload = []
-              payload.push({
-              "uid": response.body['data']['uid'],
-              "nickname": response.body['data']['nickname'],
-              "avatar_url": response.body['data']['avatar_url']
-            })
-            res.send(payload)
+            const payload = {
+              'uid': response.body['data']['uid'],
+              'nickname': response.body['data']['nickname'],
+              'avatar_url': response.body['data']['avatar_url']
+            }
+            res.send(JSON.stringify(payload))
           }
         })
 }
