@@ -17,7 +17,7 @@ grunt // 生成前端线上版本
 ## API 部分说明文档
 
 来自 @solarhell
-[HTTP 服务器形式 API 部分说明文档](t)
+[t](HTTP 服务器形式 API 部分说明文档)
 
 ## 使用了这些开源项目
  - Templet.js
