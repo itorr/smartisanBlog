@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const superagent = require('superagent')
 const Eventproxy = require('eventproxy')
+const moment = require('moment')
 
 const account = require('../config.json')
 // const errorCode = require('../error_code.json')
@@ -40,24 +41,21 @@ var ticket = {
                 console.log('成功获取了 uid: ' + JSON.stringify(res.body))
                 console.log(res.headers['set-cookie'])
 
-                // that.value = res.headers['set-cookie']
-                //     .join(',').match(/SCA_SESS=(\w{16,64})/i)[1]
                 that.value = res.headers['set-cookie']
                     .join(',').match(/SCA_SESS=([\w\-]{16,64})/i)[1]
-                that.expires = new Date().addDay(7)
+                // that.expires = new Date().addDay(7)
+                moment.locale('zh-cn')
+                let time = moment()
+                let expires = time.add(7, 'days')
+                that.expires = expires.format('YYYY-MM-DD HH:mm:ss')
 
-                console.log(that.value)
+                console.log('got ticket:' + that.value)
+                console.log('将于 ' + that.expires + ' 过期')
 
                 ep.emit('got_ticket', that.value)
               }
             })
   }
-}
-
-Date.prototype.addDay = function (dayNum) {
-  var date = new Date(this)
-  date.setDate(this.getDate() + dayNum)
-  return date
 }
 
 let execute = (method, res) => {

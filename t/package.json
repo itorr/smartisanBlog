@@ -9,6 +9,7 @@
     "eventproxy": "^0.3.5",
     "express": "^4.14.0",
     "helmet": "^2.3.0",
+    "moment": "^2.15.1",
     "morgan": "^1.7.0",
     "superagent": "^2.3.0"
   },
