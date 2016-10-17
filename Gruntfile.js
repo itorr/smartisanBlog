@@ -149,12 +149,20 @@ module.exports = function (grunt) {
 		},
 		itemplet: {
 			build: {
-				options: {
-					// 任务特定的选项放在这里
-				},
 				files: {
 					'dest/static/js/templets.js':'www/static/templet/*.templet'
 				}
+			},
+		},
+		less: {
+			dynamic_mappings: {
+				files: [{
+			    	cwd: './',
+					src:[
+						'www/static/less/i.less',
+					],
+					dest: 'dest/static/css/index.css'
+				}]
 			},
 		},
 		concat: {
@@ -175,10 +183,12 @@ module.exports = function (grunt) {
 				}
 			},
 			css:{
+				files:{
 					'dest/static/css/index.css':[
 						'dest/static/css/index.css',
 						'www/static/highlight/styles/monokai-sublime.css'
 					]
+				}
 			}
 		},
 		uglify: {
@@ -187,17 +197,6 @@ module.exports = function (grunt) {
 					'dest/static/js/build.js':'dest/static/js/build.js'
 				}
 			}
-		},
-		less: {
-			dynamic_mappings: {
-				files: [{
-			    	cwd: './',
-					src:[
-						'www/static/less/i.less',
-					],
-					dest: 'dest/static/css/index.css'
-				}]
-			},
 		},
 		cssmin: {
 			compress: {
@@ -216,7 +215,10 @@ module.exports = function (grunt) {
 			},
 		},
 		clean: {
-			js: [
+			dest: [
+				'dest/*'
+			],
+			templet: [
 				'dest/static/js/views.js',
 				'dest/static/js/templets.js'
 			]
@@ -235,14 +237,15 @@ module.exports = function (grunt) {
 
 	// 默认任务
 	grunt.registerTask('default', [
+		'clean:dest',
 		'itemplet',
 		'suffixupdate',
 		'htmlmin',
-		'concat',
 		'uglify',
 		'less',
+		'concat',
 		'cssmin',
-		'clean',
+		'clean:templet',
 		'copy',
 	]);
 
