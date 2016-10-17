@@ -3,14 +3,13 @@ module.exports = function (grunt) {
 
 	grunt.registerMultiTask('itemplet', '合并模板文件', function () {
 	
-		// Iterate over all specified file groups.
 		this.files.forEach(function (file) {
 
 			var M={};
 			var key,value;
-			// Concat specified files.
+
 			var src = file.src.filter(function (filepath) {
-				// Warn on and remove invalid source files (if nonull was set).
+
 				if (!grunt.file.exists(filepath)) {
 					grunt.log.warn('Source file "' + filepath + '" not found.');
 					return false;
@@ -21,8 +20,6 @@ module.exports = function (grunt) {
 					return true;
 				}
 			}).forEach(function (filepath) {
-
-				//grunt.log.writeln(filepath);
 
 				key=filepath.match(/\/([^/]+?)\.(templet|view)$/);
 				if(!key)
@@ -41,8 +38,6 @@ module.exports = function (grunt) {
 
 			M=JSON.stringify(M);
 
-			//grunt.log.writeln(M);
-
 			var 
 			objs=file.dest.match(/\/([^/]+?)s?\.js$/);
 
@@ -55,38 +50,6 @@ module.exports = function (grunt) {
 			grunt.log.writeln('文件 ' + file.dest + ' 生成成功');
 		});
 	});
-
-	grunt.registerMultiTask('cutjs', '修剪 JavaScript 代码', function () {
-		
-		var 
-		r=[];
-
-		this.files.forEach(function (file) {
-
-			var 
-			filepath=file.src[0];
-
-
-			if (!filepath || !grunt.file.exists(filepath)) {
-				grunt.log.warn('文件 ' + filepath + ' 不存在');
-				return true;
-			}else if(filepath.match(/3/)){
-				grunt.log.writeln('跳过文件 ' + filepath);
-				return true;
-			}
-
-			text=grunt.file.read(filepath);
-
-			text=text.replace(/console\.log\(.+?\)/g,'');
-
-			
-			grunt.file.write(file.dest,r.join(''));
-	
-			grunt.log.writeln('文件 ' + file.dest + ' 生成成功');
-		});
-	});
-
-
 
 	grunt.registerMultiTask('suffixupdate', '版本号更新', function () {
 		
