@@ -1,0 +1,24 @@
+{
+  "name": "t",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "eventproxy": "^0.3.5",
+    "express": "^4.14.0",
+    "helmet": "^2.3.0",
+    "moment": "^2.15.1",
+    "morgan": "^1.7.0",
+    "superagent": "^2.3.0"
+  },
+  "devDependencies": {
+    "eslint": "^3.8.0",
+    "eslint-config-standard": "^6.2.0",
+    "eslint-plugin-promise": "^3.0.0",
+    "eslint-plugin-standard": "^2.0.1"
+  }
+}
