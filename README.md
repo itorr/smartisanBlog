@@ -7,17 +7,17 @@
 ## 端部分使用说明
 
 
-```sh
-npm i // 安装必要的 npm 包
-grunt // 生成前端线上版本
+```bash
+npm i # 安装必要的 npm 包
+grunt # 生成前端线上版本
 ```
 
 `www/config.js` 配置 API 地址
 
 ## API 部分说明文档
 
-来自 @solarhell
-[HTTP 服务器形式 API 部分说明文档](https://github.com/itorr/smartisanBlog/tree/master/t)
+
+[HTTP 服务器形式 API 部分说明文档](https://github.com/itorr/smartisanBlog/tree/master/t) 来自 @solarhell
 
 ## 使用了这些开源项目
  - Templet.js
