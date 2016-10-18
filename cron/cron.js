@@ -203,7 +203,7 @@ var
 	*/
 	if(!SESS)
 		return 登录(function(){
-			获取用户数据(func);
+			获取用户数据(返回用户数据);
 		});
 
 
