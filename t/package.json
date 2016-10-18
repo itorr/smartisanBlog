@@ -10,10 +10,11 @@
     "cors": "^2.8.1",
     "eventproxy": "^0.3.5",
     "express": "^4.14.0",
-    "express-rate-limit": "^2.5.0",
-    "helmet": "^2.3.0",
+    // "express-rate-limit": "^2.5.0",
+    // "helmet": "^2.3.0",
     "moment": "^2.15.1",
     "morgan": "^1.7.0",
+    "shelljs": "^0.7.4",
     "superagent": "^2.3.0"
   },
   "devDependencies": {

@@ -1,10 +1,10 @@
 const fs = require('fs')
-const path = require('path')
 const express = require('express')
 const router = express.Router()
 const superagent = require('superagent')
 const Eventproxy = require('eventproxy')
 const moment = require('moment')
+require('shelljs/global')
 
 const account = require('../config.json')
 // const errorCode = require('../error_code.json')
@@ -210,6 +210,19 @@ router.get('/pics', (req, res) => {
           }
         })
   }
+})
+
+router.get('/replace', (req, res) => {
+  const itorr = JSON.parse(fs.readFileSync('./output/pics.json', 'utf-8'))
+  const tobeReplaced = fs.readFileSync('./output/post.json', 'utf-8').match((/Notes_\w+\.(png|jpeg|jpg|gif)/ig))
+  for (let offset = 0; offset < tobeReplaced.length; offset++) {
+    console.log(tobeReplaced[offset])
+    const searchPattern = new RegExp(tobeReplaced[offset])
+    console.log(searchPattern)
+    const wb = itorr[offset][tobeReplaced[offset]]
+    sed('-i', searchPattern, wb, './output/post.json')
+  }
+  res.send('替换完成!')
 })
 
 module.exports = router
