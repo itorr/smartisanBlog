@@ -18,10 +18,10 @@ grunt # 生成前端线上版本
 
 [HTTP 服务器形式 API 说明文档](https://github.com/itorr/smartisanBlog/tree/master/t) 来自 @solarhell
 
-## 定时任务形式 定时生成 静态 JSON API
+## 定时任务 静态 JSON API
 
 ```bash
-node cron/cron.js 欢喜云邮箱 欢喜云密码 # 生成 JSON 数据，默认目录 `./json`
+node cron/cron.js laoluo@t.tt woshinidie # 生成 JSON 数据，默认目录 `./json`
 ```
 
 ### crontab 定时抓取
