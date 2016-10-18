@@ -9,21 +9,27 @@ const routes = require('./routes/index')
 
 const app = express()
 const cors = require('cors')
-const helmet = require('helmet')
-const RateLimit = require('express-rate-limit')
+// const helmet = require('helmet')
+// const RateLimit = require('express-rate-limit')
 
 app.use(cors())
-app.use(helmet())
+// app.use(helmet())
 
-app.enable('trust proxy')
+app.use((req, res, next) => {
+  res.contentType('application/json')
+  next()
+})
+
+
+// app.enable('trust proxy')
 // only if you're behind a reverse proxy (Heroku, Bluemix, AWS if you use an ELB, custom Nginx setup, etc)
 
-const apiLimiter = new RateLimit({
-  windowMs: 60 * 60 * 1000, // 60 minutes
-  max: 5,
-  delayMs: 0 // disabled
-})
-app.use('/api/v1', apiLimiter)
+// const apiLimiter = new RateLimit({
+//   windowMs: 60 * 60 * 1000, // 60 minutes
+//   max: 5,
+//   delayMs: 0 // disabled
+// })
+// app.use('/api/v1', apiLimiter)
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'))

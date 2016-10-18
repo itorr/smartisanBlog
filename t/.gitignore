@@ -2,3 +2,5 @@
 .DS_Store
 node_modules
 config.json
+output/
+pics/
