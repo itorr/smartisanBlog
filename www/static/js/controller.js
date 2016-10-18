@@ -61,7 +61,7 @@ ME,
 POST={},
 text2html=function(txt){
 
-	txt=txt.replace(/<image w=(\d+) h=(\d+) describe=(.{0,}?) name=(Notes_\d+\.(jpeg|png|jpg|gif))>/g,function(全,宽,高,说明文字,图片文件名){
+	txt=txt.replace(/<image w=(\d+) h=(\d+) describe=([^>]+?)? name=(Notes_\d+\.(jpeg|png|jpg|gif)|\w{16,32})>/g,function(全,宽,高,说明文字,图片文件名){
 //		console.log(全,宽,高,说明文字,图片文件名);
 
 		var 
@@ -69,6 +69,7 @@ text2html=function(txt){
 		输出高=高,
 		比例=高/宽;
 
+		说明文字=说明文字||'';
 
 		if(宽>400){
 			输出宽=400;
@@ -83,6 +84,9 @@ text2html=function(txt){
 		var 
 		src='https://cloud.smartisan.com/notesimage/'+图片文件名;
 
+		if(图片文件名.match(/^\w{16,32}$/i)){
+			src='http://ww2.sinaimg.cn/mw1024/'+图片文件名;
+		}
 
 		// if(PIC[src])
 		// 	src='http://ww2.sinaimg.cn/mw1024/'+PIC[src];
@@ -103,7 +107,7 @@ C=new Markdown.Converter(),
 _md2html=function(i){
 	i=i.replace(/```(|[\w]+)[\r\n]+([\W.\S]*?)```/mg,function(i,a,b){
 		return '<pre><code class="'+a+'">'+b.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\'/g,"&#39;").replace(/\"/g,"&quot;")+'</code></pre>'
-	}).replace(/(^|[^\"\'\]>])(http\:\/\/ww[0-9]{1}\.sinaimg\.cn\/)([\w]{4,10})(\/[\w]{16,32})(|\.gif|\.jpg|\.jpeg)/g,"<img src=\"$2mw1024$4$5\">")
+	})//.replace(/(^|[^\"\'\]>])(http\:\/\/ww[0-9]{1}\.sinaimg\.cn\/)([\w]{4,10})(\/[\w]{16,32})(|\.gif|\.jpg|\.jpeg)/g,"<img src=\"$2mw1024$4$5\">")
 
 	i=C.makeHtml(i);
 	return i
@@ -204,7 +208,7 @@ $.x($.U('info'),function(r){
 			o.hasImage=!!o.detail.match(/<image/);
 			POST[o.pos]=o;
 
-			if(o.favorite)
+			// if(o.favorite)
 				_post.push(o);
 		}
 
