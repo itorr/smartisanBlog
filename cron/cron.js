@@ -93,15 +93,12 @@ var
 
 	next();
 },
-上传图片到微博=function(file,func){
+上传图片到微博=function(file,返回图片唯一值){
 	request.post({
 		url:'http://x.mouto.org/wb/x.php?up',
 		formData:{
 			file:fs.createReadStream(file)
 		},
-		headers:{
-
-		}
 	},function(e,res,body){
 
  		var 
@@ -111,21 +108,21 @@ var
  		if(e || body.match(/error/) || !pid){
  			console.log(/上传失败/,body);
 
- 			func();
+ 			return 返回图片唯一值();
  		}
 
  		pid=''+pid;
 
 		console.log(/上传完成一张图/,file,pid);
 
-		func(pid);
+		返回图片唯一值(pid);
 	});
 },
-下载图片=function(url,path,func){
+下载图片=function(url,path,返回图片路径){
 
 	if(fs.existsSync(path)){
 		console.log(/文件已存在/,path);
-		return func(path);
+		return 返回图片路径(path);
 	}
 
 	request(url,{
@@ -137,18 +134,18 @@ var
 		}
 	},function(err,res,body){
 		if(err){
-			console.log(/封面图下载失败。/,err);
+			console.log(/图片下载失败。/,err);
 			return func();
 		}
 
 		console.log(/图片下载完成/,path);
 
 		
-		func(path);
+		返回图片路径(path);
 
 	}).pipe(fs.createWriteStream(path));	
 },
-登录=function(func){
+登录=function(返回登录凭证){
 	request.post('https://account.smartisan.com/v2/session/?m=post',{
 		headers:{
 			'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36',
@@ -184,10 +181,10 @@ var
 
 		fs.writeFileSync(用户临时凭证文件文件路径,SESS,{encoding:'utf8'});
 		console.log(/用户临时凭证保存成功/,SESS);
-		func();
+		返回登录凭证(SESS);
 
 	});
-},获取用户数据=function(func){
+},获取用户数据=function(返回用户数据){
 
 	/*
 
@@ -249,10 +246,10 @@ var
 		fs.writeFileSync(用户数据文件路径,JSON.stringify(用户信息),{encoding:'utf8'});
 		console.log(/用户信息保存成功/,用户信息);
 
-		func();
+		返回用户数据(用户信息);
 
 	});
-},获取文章数据=function(func){
+},获取文章数据=function(返回文章数据){
 
 	request.get('https://cloud.smartisan.com/apps/note/index.php?r=v2/getList',{
 		headers:{
@@ -291,7 +288,7 @@ var
 		});
 
 
-		func();
+		返回文章数据();
 	});
 },整理文件夹数据=function(_文件夹们){
 
@@ -330,7 +327,7 @@ var
 
 },
 线上图片路径前缀='https://cloud.smartisan.com/apps/note/notesimage/',
-根据字符串取得图片下载到本地上传微博并替换=function(文章数据,func){
+根据字符串取得图片下载到本地上传微博并替换=function(文章数据,返回文章数据){
 	图片们=文章数据.match(/Notes_\d+\.(png|jpeg|jpg|gif)/ig);
 
 	// 图片们=图片们.map(function(o){
@@ -346,9 +343,11 @@ var
 		if(PICS[图片]){
 			return 处理下一张图片();
 		}
-		 下载图片(线上图片路径前缀+图片,文件配图文件夹路径+图片,function(path){
 
-		 	// console.log(path);
+		 下载图片(线上图片路径前缀+图片,文件配图文件夹路径+图片,function(path){
+		 	 if(!path){
+		 	 	return 处理下一张图片();
+		 	 }
 
 		 	上传图片到微博(path,function(pid){
 
@@ -370,7 +369,7 @@ var
 			return PICS[all]||all;
 		});
 
-		func(文章数据);
+		返回文章数据(文章数据);
 
 	});
 },
@@ -391,7 +390,7 @@ var
 整理数据=function(){
 	获取用户数据(function(){
 		获取文章数据(function(){
-			console.log(/成功！/);
+			console.log(/全部完成！/);
 		});
 	});
 };
