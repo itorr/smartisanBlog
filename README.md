@@ -18,7 +18,7 @@ grunt # 生成前端线上版本
 
 [HTTP 服务器形式 API 说明文档](https://github.com/itorr/smartisanBlog/tree/master/t) 来自 @solarhell
 
-# Cron 定时任务 静态 API
+## Cron 定时任务 静态 API
 
 [Cron 定时任务 静态 API 说明文档](https://github.com/itorr/smartisanBlog/tree/master/cron) 来自 @wsph123
 
