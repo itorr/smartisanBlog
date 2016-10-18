@@ -89,7 +89,7 @@ const getProfile = (ticket, res) => {
               'nickname': response.body['data']['nickname'],
               'avatar_url': response.body['data']['avatar_url']
             }
-            fs.writeFileSync('./output/info.json', JSON.stringify(payload, null, 2) , 'utf-8')
+            fs.writeFileSync('./output/info.json', JSON.stringify(payload, null, 2), 'utf-8')
             res.send(JSON.stringify(payload))
           }
         })
@@ -141,7 +141,7 @@ const getImage = (ticket, res) => {
   }
   console.log(锤子数组)
   fs.writeFileSync('./output/t.json', JSON.stringify(锤子数组, null, 2), 'utf-8')
-  for (let offset = 0; offset < 锤子数组.length; offset ++) {
+  for (let offset = 0; offset < 锤子数组.length; offset++) {
     console.log('我是第' + offset + '个' + 锤子数组[offset])
     console.log('我是第' + offset + '个' + 图片们[offset])
 
@@ -154,7 +154,7 @@ const getImage = (ticket, res) => {
           if (err || !response.ok) {
             console.log('出错了!')
           } else {
-            fs.writeFileSync('./pics/'+图片们[offset], response.body)
+            fs.writeFileSync('./pics/' + 图片们[offset], response.body)
             if (downStatus(图片们.length, 图片们[offset])) {
               res.send('所有图片下载完成!\r\n' + 图片们)
             }
@@ -180,33 +180,34 @@ router.get('/pics', (req, res) => {
   const post = fs.readFileSync('./output/post.json', 'utf-8')
   const 图片们 = post.match(/Notes_\w+\.(png|jpeg|jpg|gif)/ig)
   const payload = []
-  console.log(图片们.length)
+  const ep = new Eventproxy()
+
+  ep.after('upload_wb', 图片们.length, (payload) => {
+    res.send('跟偷偷肉交易完毕!\r\n' + JSON.stringify(payload))
+  })
+
   for (let offset = 0; offset < 图片们.length; offset++) {
     let file = fs.readFileSync('./pics/' + 图片们[offset])
     superagent
         .post(url.itorr)
         .set('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.59 Safari/537.36')
         .set('Content-Type', 'multipart/form-data')
-        .attach('file', file, './pics'+ 图片们[offset])
+        .attach('file', file, './pics' + 图片们[offset])
         .end((err, response) => {
           if (err || !response.ok) {
             console.log('出错了!')
           } else {
-            console.log('当前下标' + offset)
-            console.log('正在上传' + 图片们[offset])
-            console.log('一共有' + 图片们.length)
+            console.log('第' + (offset + 1) + '张图片' + 图片们[offset] + '上传成功! pid 是:' + response.body.pid)
+            console.log('一共有' + 图片们.length + '张图片')
 
             const a = {}
             const key = 图片们[offset]
             const value = response.body.pid
             a[key] = value
             payload.push(a)
-
-            if (offset === 图片们.length - 1) {
-              console.log(payload)
-              fs.writeFileSync('./output/pics.json', JSON.stringify(payload, null, 2), 'utf-8')
-              res.send('跟偷偷肉交易完毕!\r\n' + JSON.stringify(payload))
-            }
+            console.log(payload)
+            fs.writeFileSync('./output/pics.json', JSON.stringify(payload, null, 2), 'utf-8')
+            ep.emit('upload_wb', [payload])
           }
         })
   }
