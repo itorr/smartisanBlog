@@ -13,7 +13,7 @@ crontab -e # 编辑定时任务
 在行尾添加
 
 ```bash
-*/30 * * * * cd /home/git/smartisanBlog/;node cron/cron.js
+*/30 * * * * cd /home/git/smartisanBlog/;node cron/cron.js 账号 密码
 ```
 
 ## 图床
