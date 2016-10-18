@@ -18,22 +18,9 @@ grunt # 生成前端线上版本
 
 [HTTP 服务器形式 API 说明文档](https://github.com/itorr/smartisanBlog/tree/master/t) 来自 @solarhell
 
-## 定时任务 静态 JSON API
+# Cron 定时任务 静态 API
 
-```bash
-node cron/cron.js laoluo@t.tt woshinidie # 生成 JSON 数据，默认目录 `./json`
-```
-
-### crontab 定时抓取
-
-```bash
-crontab -e # 编辑定时任务
-```
-在行尾添加
-
-```bash
-*/30 * * * * cd /home/git/smartisanBlog/;node cron/cron.js
-```
+[Cron 定时任务 静态 API 说明文档](https://github.com/itorr/smartisanBlog/tree/master/cron) 来自 @wsph123
 
 ## 使用了这些开源项目
  - Templet.js
