@@ -29,6 +29,9 @@ grunt # 生成前端线上版本
 
 [Cron 定时任务 静态 API 说明文档](https://github.com/itorr/smartisanBlog/tree/master/cron) 来自 @wsph123
 
+## 马上会有
+ - 类别（基于锤子便签后加的文件夹实现）
+
 ## 使用了这些开源项目
  - Templet.js
  - PageDown.js
