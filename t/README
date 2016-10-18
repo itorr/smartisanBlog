@@ -8,11 +8,13 @@ node ./bin/www.js
 
 Currently available api
 
-http://localhost:3000/api/v1/info // 获取信息
-http://localhost:3000/api/v1/post // 获取便签
-http://localhost:3000/api/v1/t    // 下载便签内的所有图片
-http://localhost:3000/api/v1/pics // 上传所有图片到微博
+食用顺序!
 
+1 http://localhost:3000/api/v1/info    // 获取信息
+2 http://localhost:3000/api/v1/post    // 获取便签
+3 http://localhost:3000/api/v1/t       // 下载便签内的所有图片
+4 http://localhost:3000/api/v1/pics    // 上传所有图片到微博
+5 http://localhost:3000/api/v1/replace // 替换锤子图片为微博图床
 
 `app.js` 内的 apiRateLimit 已经注释，需要部署可以考虑开启，防止请求过于频繁。
 
