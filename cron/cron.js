@@ -104,14 +104,14 @@ var
  		var 
  		pid=body.match(/\w{16,32}/i);
 
+ 		pid=''+pid;
 
- 		if(e || body.match(/error/) || !pid){
+ 		if(e || body.match(/error|file_/) || !pid){
  			console.log(/上传失败/,body);
 
  			return 返回图片唯一值();
  		}
 
- 		pid=''+pid;
 
 		console.log(/上传完成一张图/,file,pid);
 
