@@ -1,3 +1,4 @@
+![锤子博客，基于锤子便签的博客程序。](http://ww4.sinaimg.cn/large/a15b4afegw1f8wp4958lcj20pj0fan2e)
 # 锤子博客
 🔨博客，基于锤子便签的博客程序。
 
@@ -45,4 +46,4 @@ grunt # 生成前端线上版本
 
 ## 演示
 
-[http://front.dog/smartisan/#/home](http://front.dog/smartisan/#/home)
+[http://front.dog/smartisan/](http://front.dog/smartisan/)
