@@ -15,3 +15,6 @@ crontab -e # 编辑定时任务
 ```bash
 */30 * * * * cd /home/git/smartisanBlog/;node cron/cron.js
 ```
+
+## 图床
+最近图床抽风比较严重，抽风那就多重试几次 w
