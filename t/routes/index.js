@@ -6,8 +6,13 @@ const Eventproxy = require('eventproxy')
 const moment = require('moment')
 require('shelljs/global')
 
-const account = require('../config.json')
-// const errorCode = require('../error_code.json')
+// 七牛相关逻辑，使用微博图床请注释
+// const qiniu = require('qiniu')
+// const config = require('../qiniu')
+// qiniu.conf.ACCESS_KEY = config.ACCESS_KEY
+// qiniu.conf.SECRET_KEY = config.SECRET_KEY
+
+const account = require('../account.json')
 
 const url = {
   getCookie: 'https://account.smartisan.com/v2/session/?m=post',
@@ -176,12 +181,12 @@ router.get('/t', (req, res) => {
   execute(getImage, res)
 })
 
-router.get('/pics', (req, res) => {
+// 上传到微博图床
+router.get('/itorr', (req, res) => {
   const post = fs.readFileSync('./output/post.json', 'utf-8')
   const 图片们 = post.match(/Notes_\w+\.(png|jpeg|jpg|gif)/ig)
   const payload = []
   const ep = new Eventproxy()
-
   ep.after('upload_wb', 图片们.length, (payload) => {
     res.send('跟偷偷肉交易完毕!\r\n' + JSON.stringify(payload))
   })
@@ -192,7 +197,7 @@ router.get('/pics', (req, res) => {
         .post(url.itorr)
         .set('User-Agent', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.59 Safari/537.36')
         .set('Content-Type', 'multipart/form-data')
-        .attach('file', file, './pics' + 图片们[offset])
+        .attach('file', file, './pics/' + 图片们[offset])
         .end((err, response) => {
           if (err || !response.ok) {
             console.log('出错了!')
@@ -213,7 +218,8 @@ router.get('/pics', (req, res) => {
   }
 })
 
-router.get('/replace', (req, res) => {
+// 替换为微博图片链接
+router.get('/wb', (req, res) => {
   const itorr = JSON.parse(fs.readFileSync('./output/pics.json', 'utf-8'))
   const tobeReplaced = fs.readFileSync('./output/post.json', 'utf-8').match((/Notes_\w+\.(png|jpeg|jpg|gif)/ig))
   for (let offset = 0; offset < tobeReplaced.length; offset++) {
@@ -225,5 +231,53 @@ router.get('/replace', (req, res) => {
   }
   res.send('替换完成!')
 })
+
+// 上传到七牛
+// router.get('/pics', (req, res) => {
+//   const post = fs.readFileSync('./output/post.json', 'utf-8')
+//   const 图片们 = post.match(/Notes_\w+\.(png|jpeg|jpg|gif)/ig)
+//   const ep = new Eventproxy()
+//   ep.after('upload_qiniu', 图片们.length, () => {
+//     res.send('上传到七牛完毕!\r\n' + '请替换post.json中的地址')
+//   })
+
+//   for (let offset = 0; offset < 图片们.length; offset++) {
+//     const bucket = config.Bucket_Name
+
+//     const uptoken = (bucket, key) => {
+//       let putPolicy = new qiniu.rs.PutPolicy(bucket + ':' + key)
+//       return putPolicy.token()
+//     }
+
+//     const uploadToQiniu = (uptoken, key, localFile) => {
+//       let extra = new qiniu.io.PutExtra()
+//       qiniu.io.putFile(uptoken, key, localFile, extra, (err, response) => {
+//         if (!err) {
+//           console.log(response.key + '上传成功!')
+//         } else {
+//           console.log(err)
+//         }
+//       })
+//     }
+//     let key = 图片们[offset]
+//     let filePath = './pics/' + key
+//     let token = uptoken(bucket, key)
+//     uploadToQiniu(token, key, filePath)
+//     ep.emit('upload_qiniu')
+//   }
+// })
+
+// 替换为七牛图片链接
+// router.get('/qiniu', (req, res) => {
+//   const tobeReplaced = fs.readFileSync('./output/post.json', 'utf-8').match((/Notes_\w+\.(png|jpeg|jpg|gif)/ig))
+//   for (let offset = 0; offset < tobeReplaced.length; offset++) {
+//     console.log(tobeReplaced[offset])
+//     const searchPattern = new RegExp(tobeReplaced[offset])
+//     console.log(searchPattern)
+//     const qiniu = config.Domain + tobeReplaced[offset]
+//     sed('-i', searchPattern, qiniu, './output/post.json')
+//   }
+//   res.send('替换完成!')
+// })
 
 module.exports = router

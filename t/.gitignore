@@ -1,6 +1,7 @@
 .idea/
 .DS_Store
 node_modules
-config.json
+account.json
+qiniu.js
 output/
 pics/

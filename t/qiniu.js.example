@@ -1,0 +1,6 @@
+module.exports = {
+  'ACCESS_KEY': '你的ACCESS_KEY',
+  'SECRET_KEY': '你的SECRET_KEY',
+  'Bucket_Name': '你的Bucket_Name',
+  'Domain': '你的域名 http://a.com/ 注意带上结尾的slash'
+}

@@ -1,23 +1,41 @@
 ```bash
-cp config.json.example config.json
+cp account.json.example account.json
 mkdir pics
 mkdir output
 npm i
 node ./bin/www.js
 ```
 
-Currently available api
+如果要使用七牛图床:
+```bash
+cp config.js.example config.js
+```
+编辑 `routes/index.js`
 
-食用顺序!
+
+食用方法!
+
+微博图床
 
 1 http://localhost:3000/api/v1/info    // 获取信息
 2 http://localhost:3000/api/v1/post    // 获取便签
 3 http://localhost:3000/api/v1/t       // 下载便签内的所有图片
-4 http://localhost:3000/api/v1/pics    // 上传所有图片到微博
-5 http://localhost:3000/api/v1/replace // 替换锤子图片为微博图床
+4 http://localhost:3000/api/v1/itorr    // 上传所有图片到微博
+5 http://localhost:3000/api/v1/wb // 替换锤子图片为微博图床
+
+
+七牛图床
+
+1 http://localhost:3000/api/v1/info    // 获取信息
+2 http://localhost:3000/api/v1/post    // 获取便签
+3 http://localhost:3000/api/v1/t       // 下载便签内的所有图片
+4 http://localhost:3000/api/v1/pics    // 上传所有图片到七牛
+5 http://localhost:3000/api/v1/qiniu // 替换锤子图片为七牛图床
+
+
 
 `app.js` 内的 apiRateLimit 已经注释，需要部署可以考虑开启，防止请求过于频繁。
 
 TODO：
 缓存！
-正则替换！
+正则替换！（目前使用sed）
