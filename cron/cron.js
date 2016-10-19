@@ -27,6 +27,9 @@ var
 
 
 
+var 
+线上图片路径前缀='https://cloud.smartisan.com/apps/note/notesimage/';
+
 /*
 curl 'https://account.smartisan.com/v2/session/?m=post' \
 	-H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36' \
@@ -326,16 +329,9 @@ var
 	});
 
 },
-线上图片路径前缀='https://cloud.smartisan.com/apps/note/notesimage/',
 根据字符串取得图片下载到本地上传微博并替换=function(文章数据,返回文章数据){
+	var 
 	图片们=文章数据.match(/Notes_\d+\.(png|jpeg|jpg|gif)/ig);
-
-	// 图片们=图片们.map(function(o){
-	// 	return 'https://cloud.smartisan.com/apps/note/notesimage/'+o;
-	// });
-
-
-	console.log(图片们);
 
 
 	按顺序执行(图片们,function(图片,处理下一张图片){
